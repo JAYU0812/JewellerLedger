@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jeweller Ledger - Signup</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Custom styles for body and font-family */
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100">
+
+  <div class="bg-white p-8 sm:p-10 rounded-xl shadow-2xl text-center max-w-sm w-full transform transition-all duration-300 hover:scale-105">
+    <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-8">
+      Signup
+    </h2>
+
+    <form method="POST" action="signup.php" class="space-y-6">
+      <div>
+        <input
+          type="text"
+          name="name"
+          placeholder="Jeweller Name"
+          required
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-lg placeholder-gray-500"
+        >
+      </div>
+      <div>
+        <input
+          type="password"
+          name="passcode"
+          placeholder="Passcode"
+          required
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-lg placeholder-gray-500"
+        >
+      </div>
+      
+      <button
+        type="submit"
+        class="w-full mt-4 px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold text-lg rounded-full shadow-lg hover:from-purple-600 hover:to-pink-600 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-purple-300"
+      >
+        Create Account
+      </button>
+    </form>
+
+    <div class="mt-8">
+      <p class="text-gray-600 mb-4">Already have an account?</p>
+      <a href="login.html"
+         class="inline-block px-6 py-3 border border-blue-400 text-blue-600 font-semibold rounded-full hover:bg-blue-50 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2">
+        Log In
+      </a>
+    </div>
+  </div>
+<script>
+  document.querySelector("form").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    const res = await fetch("signup.php", {
+      method: "POST",
+      body: formData
+    });
+
+    const text = await res.text();
+    const [status, message] = text.split("|");
+
+    if (status === "success") {
+      alert("✅ Signup successful!");
+      window.location.href = "dashboard.php?jeweller_id=" + message;
+    } else {
+      alert("❌ Signup failed: " + message);
+    }
+  });
+</script>
+
+</body>
+</html>
